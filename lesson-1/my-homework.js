@@ -10,12 +10,15 @@
     rus: ['RusAuto', 'SBO']
  };
 
+ calcCash = (own = 0, ...arr) => {
+    [arr] = arr;
+    const res = (arr.reduce((total, current) => total + current)) + own;
+    return res
+ }
+
  let {cash, eu, rus} = sponsors;
  
- let money = cash.reduce(
-    (accumulator, currentValue) => accumulator + currentValue,
-    0
- );
+ let money = calcCash(null, cash);
 
  makeBusiness = (owner, director = 'Victor', cash, emp) => {
     const sumSponsors = [...eu, ...rus, 'unexpected sponsor'];
