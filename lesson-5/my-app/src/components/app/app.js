@@ -22,36 +22,23 @@ const SearchBlock = styled.div`
 export default class App extends Component {
   constructor(props) {
     super(props);
-    // this.dataId = idGenerator();
     this.state = {
       data: [
         {label: 'Going to learn React', important: true, id: idGenerator()},
         {label: 'That is so good', important: false, id: idGenerator()},
         {label: 'I need a break...', important: false, id: idGenerator()}
       ]
-      // dataNew: this.data.filter((item) => item.__proto__ === Object.prototype)
     };
     this.deleteItem = this.deleteItem.bind(this);
     this.addItem = this.addItem.bind(this);
-
-    this.maxId = 4;
   }
 
-  // const dataNew = data.filter((item) => typeof item === 'object');
-  // const dataNew = data.filter((item) => item.__proto__ === Object.prototype);
-
-  // filterItem() {
-  //    this.setState(({data}) => {
-  //     const dataNew = data.filter((item) => item.__proto__ === Object.prototype);
-  //     return {
-  //       data: dataNew
-  //     }      
-  //   });
-  // }
+  addId() {
+    console.log(this.state.data);
+    console.log(this.state.data.length);
+  }
 
   deleteItem(id) {
-    // const {dataId} = this.state.data.id;
-    // console.log(dataId);
     this.setState(({data}) => {
       const index = data.findIndex(elem => elem.id === id);
       // этот метод меняет елемент в state - этого делать нельзя!
@@ -74,17 +61,22 @@ export default class App extends Component {
     const newItem = {
       label: body,
       important: false,
-      id: this.maxId++
+      id: idGenerator()
     }
+    // const dataNew = data.filter((item) => typeof item === 'object');
+    // const dataNew = data.filter((item) => item.__proto__ === Object.prototype);
     this.setState(({data}) => {
-      const newArr = [...data, newItem];
-      return {
-        data: newArr
+      if (newItem.__proto__ === Object.prototype) {
+        const newArr = [...data, newItem];
+        return {
+          data: newArr
+        }
       }
     });
   }
 
   render() {
+    this.addId();
     return (
       <AppBlock>
         <AppHeader/>
