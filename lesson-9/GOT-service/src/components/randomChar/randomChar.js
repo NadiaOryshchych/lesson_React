@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import GotService from '../../services/gotService';
+import View from '../viewChar';
 import Spinner from '../spinner';
 import ErrorMessage from '../errorMessage';
 
@@ -13,40 +14,6 @@ const RandomCharBlock = styled.div`
     width: 100%;
   }
 `;
-const RandomCharName = styled.div `
-  margin-bottom: 20px;
-  text-align: center;
-`;
-const TermView = styled.span `
-  font-weight: bold;
-`;
-
-const View = ({char}) => {
-  const {name, gender, born, died, culture} = char;
-  return (
-    <>
-      <RandomCharName>Random Character: {name}</RandomCharName>
-      <ul className="list-group list-group-flush">
-        <li className="list-group-item d-flex justify-content-between">
-          <TermView className="term">Gender </TermView>
-          <span>{gender}</span>
-        </li>
-        <li className="list-group-item d-flex justify-content-between">
-          <TermView className="term">Born </TermView>
-          <span>{born}</span>
-        </li>
-        <li className="list-group-item d-flex justify-content-between">
-          <TermView className="term">Died </TermView>
-          <span>{died}9</span>
-        </li>
-        <li className="list-group-item d-flex justify-content-between">
-          <TermView className="term">Culture </TermView>
-          <span>{culture}</span>
-        </li>
-      </ul>
-    </>
-  )
-}
 
 export default class RandomChar extends Component {
   gotService = new GotService();

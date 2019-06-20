@@ -12,7 +12,7 @@ const ButtonShowHide = styled.button`
   margin: 15px auto;
   padding: 5px;
   background-color: white;
-  border-color: gray;
+  border: none;
   border-radius: 7px;
 `;
 

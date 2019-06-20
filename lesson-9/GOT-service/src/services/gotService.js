@@ -46,7 +46,10 @@ export default class GotService {
       gender: char.gender,
       born: char.born,
       died: char.died,
-      culture: char.culture
+      culture: char.culture,
+      // id: char.url.substr(49)
+      // id: char.url.substr(char.url.lastIndexOf('/') + 1)
+      id: char.url.match(/\/([^/]*)$/)[1]
     }
   }
 

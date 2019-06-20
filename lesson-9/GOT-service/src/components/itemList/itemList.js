@@ -28,7 +28,6 @@ export default class ItemList extends Component {
       })
       .then(this.onCharLoaded)
     ; 
-    // console.log(this.state.charList)
   }
 
   onCharLoaded = (char) => {
@@ -42,9 +41,9 @@ export default class ItemList extends Component {
     return arr.map((item, i) => {
       return (
         <li 
-          key={i}
+          key={item.id}
           className="list-group-item"
-          onClick={() => this.props.onCharSelected(271 + i)} >
+          onClick={() => this.props.onCharSelected(item.id)} >
           {item.name}
         </li>
       )
