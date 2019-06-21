@@ -79,9 +79,11 @@ export default class ItemDetails extends Component {
       return <Spinner />;
     }
 
+    const {nameList} = this.props;
+
     // if (this.state.char == null || this.state.char == undefined) {
     if (this.state.error) {
-      return <div className = 'select-error' > Please select a character </div>
+      return <div className = 'select-error' > Please select a {nameList} </div>
     }
     const {item} = this.state;
     const {name, id} = item;

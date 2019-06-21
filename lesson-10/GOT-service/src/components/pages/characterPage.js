@@ -39,6 +39,7 @@ export default class CharacterPage extends Component {
 
     const charDetails = (
       <ItemDetails 
+        nameList={'character'}
         itemId={this.state.selectedChar}
         getData={this.gotService.getCharacter} >
           <Field field='gender' label='Gender' /> 

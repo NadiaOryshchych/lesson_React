@@ -39,6 +39,7 @@ export default class BooksPage extends Component {
 
     const bookDetails = (
       <ItemDetails
+        nameList={'book'}
         itemId={this.state.selectedBook}
         getData={this.gotService.getBook} >
           <Field field='numberOfPages' label='Number of pages' /> 
