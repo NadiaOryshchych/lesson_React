@@ -25,13 +25,13 @@ export default class ItemList extends Component {
           itemList
         })
       })
-      .then(this.onCharLoaded)
+      .then(this.onListLoaded)
     ; 
   }
 
-  onCharLoaded = (char) => {
+  onListLoaded = (list) => {
     this.setState({
-      char,
+      list,
       loading: false
     })
   }
@@ -49,17 +49,21 @@ export default class ItemList extends Component {
           {label}
         </li>
       )
-    })
+    });
   }
 
   render() {
     const {itemList, loading} = this.state;
+    console.log(itemList);
+    console.log(loading);
 
     if (!itemList) {
       return <Spinner/>
     }
-    // const spinner = (loading) ? <Spinner/> : null;
     const items = this.renderItem(itemList);
+    console.log(itemList);
+
+    // const spinner = (loading) ? <Spinner/> : null;
 
     return (
       <ListBlock className="item-list list-group">

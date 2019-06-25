@@ -23,7 +23,7 @@ export default class GotService {
   }
 
   getAllBooks = async () => {
-    const res = await this.getResource('/books');
+    const res = await this.getResource('/books?page=1&pageSize=12');
     return res.map(this._transformBooks)
   }
   getBook = async (id) => {
@@ -32,7 +32,7 @@ export default class GotService {
   }
 
   getAllHouses = async () => {
-    const res = await this.getResource('/houses');
+    const res = await this.getResource('/houses?page=5&pageSize=10');
     return res.map(this._transformHouses)
   }
   getHouse = async (id) => {
@@ -64,7 +64,7 @@ export default class GotService {
   _transformBooks = (book) => {
     return {
       name: book.name,
-      numberOfPages: book.nemberOfPages,
+      numberOfPages: book.numberOfPages,
       publiser: book.publiser,
       released: book.released,
       id: book.url.match(/\/([^/]*)$/)[1]

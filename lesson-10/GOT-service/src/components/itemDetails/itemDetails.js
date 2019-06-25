@@ -19,12 +19,17 @@ const ItemName = styled.div `
 const TermView = styled.span `
   font-weight: bold;
 `;
+const ErrorText = styled.span`
+  color: darkred;
+`;
 
 const Field = ({item, field, label}) => {
   return (
     <li className="list-group-item d-flex justify-content-between">
       <TermView className="term">{label}</TermView>
-      <span>{item[field]}</span>
+      <span>{
+        item[field] ? item[field] : <ErrorText>! unknown !</ErrorText>
+      }</span>
     </li>
   )
 }
@@ -35,29 +40,43 @@ export default class ItemDetails extends Component {
   gotService = new GotService();
 
   state = {
-    item: null,
+    item: {},
     loading: true,
     error: false
   };
 
   componentDidMount() {
-    this.updateChar();
+    this.updateItem();
+    console.log('mounting');
   }
 
   componentDidUpdate(prevProps) {
     if (this.props.itemId !== prevProps.itemId) {
-      this.updateChar();
+      this.updateItem();
     }
+    console.log('update');
   }
 
-  onError = (err) => {
+  // componentDidCatch() {
+  //   console.log('error');
+  //   this.setState({error: true})
+  // } 
+
+  onItemLoaded = (item) => {
     this.setState({
-      error: true,
+      item,
       loading: false
-    });
+    })
   }
 
-  updateChar() {
+  // onError = (err) => {
+  //   this.setState({
+  //     error: true,
+  //     loading: false
+  //   });
+  // }
+
+  updateItem() {
     const { itemId } = this.props;
 
     if (!itemId) {
@@ -67,14 +86,21 @@ export default class ItemDetails extends Component {
     const {getData} = this.props; 
 
     getData(itemId)
-      .then(item => {
+      .then( item => {
         this.setState({ item });
       })
+      // .then(this.onItemLoaded)
       .catch(this.onError);
     // this.foo.bar = 0;
   }
 
   render() {
+    const { char, loading, error } = this.state;
+
+      // const errorMessage = error ?  <ErrorMessage/> : null;
+      // const spinner = loading ? <Spinner/> : null;
+      // const content = !(loading || error) ? <View char={char} /> : null;
+
     if (!this.state.item) {
       return <Spinner />;
     }
@@ -87,6 +113,8 @@ export default class ItemDetails extends Component {
     }
     const {item} = this.state;
     const {name, id} = item;
+    console.log(name);
+    console.log(this.props.children);
     return (
       <ItemDetailsBlock className="rounded">
         <ItemName>{name}</ItemName>

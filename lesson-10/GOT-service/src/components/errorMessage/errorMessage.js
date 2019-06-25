@@ -16,9 +16,9 @@ const ErrorText = styled.div`
 const ErrorMessage = () => {
   return (
     <>
+      <ErrorText className="text-center">Something goes wrong</ErrorText>
       {/* <img src={process.env.PUBLIC_URL + '/img/error.jpg'} alt='error'></img>  если импортирую с папки public */}
       <img src={img} alt='error'></img> {/* если импортирую с этой же папки */}
-      <ErrorText className="text-center">Something goes wrong</ErrorText>
     </>
   )
 }

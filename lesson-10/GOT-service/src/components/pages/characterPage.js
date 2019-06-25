@@ -35,7 +35,7 @@ export default class CharacterPage extends Component {
         onItemSelected={this.onItemSelected}
         getData={this.gotService.getAllCharacters}
         renderItem={({name, gender}) =>`${name} (${gender})`} />
-    );
+    ); 
 
     const charDetails = (
       <ItemDetails 

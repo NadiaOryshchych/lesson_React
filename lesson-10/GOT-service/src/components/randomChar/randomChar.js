@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import GotService from '../../services/gotService';
-import ItemDetails, {Field} from '../itemDetails';
+// import ItemDetails, {Field} from '../itemDetails';
 import Spinner from '../spinner';
 import ErrorMessage from '../errorMessage';
 
@@ -21,6 +21,9 @@ const ItemName = styled.div `
 const TermView = styled.span `
   font-weight: bold;
 `;
+const ErrorText = styled.span `
+  color: darkred;
+`;
 
 const View = ({char}) => {
   const {name, gender, born, died, culture, id} = char;
@@ -31,19 +34,27 @@ const View = ({char}) => {
       <ul className="list-group list-group-flush">
         <li className="list-group-item d-flex justify-content-between">
           <TermView className="term">Gender </TermView>
-          <span>{gender}</span>
+          <span>{
+            gender ? gender : <ErrorText>! unknown !</ErrorText>
+          }</span>
         </li>
         <li className="list-group-item d-flex justify-content-between">
           <TermView className="term">Born </TermView>
-          <span>{born}</span>
+          <span>{
+            born ? born : <ErrorText>! unknown !</ErrorText>
+          }</span>
         </li>
         <li className="list-group-item d-flex justify-content-between">
           <TermView className="term">Died </TermView>
-          <span>{died}9</span>
+          <span>{
+            died ? died : <ErrorText>! unknown !</ErrorText>
+          }</span>
         </li>
         <li className="list-group-item d-flex justify-content-between">
           <TermView className="term">Culture </TermView>
-          <span>{culture}</span>
+          <span>{
+            culture ? culture : <ErrorText>! unknown !</ErrorText>
+          }</span>
         </li>
       </ul>
     </>
