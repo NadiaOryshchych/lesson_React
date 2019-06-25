@@ -9,7 +9,7 @@ export default class HousesPage extends Component {
   gotService = new GotService();
 
   state = {
-    selectedHouse: 5,
+    selectedHouse: 10,
     error: false
   }
 
@@ -26,9 +26,6 @@ export default class HousesPage extends Component {
   }
 
   render() {
-    if (this.state.error) {
-      return <ErrorMessage />
-    }
 
     const itemList = (
       <ItemList 
@@ -45,13 +42,16 @@ export default class HousesPage extends Component {
           <Field field='region' label='Region' /> 
           <Field field='words' label='Words' /> 
           <Field field='titles' label='Titles' /> 
-          <Field field='overload' label='Overload' /> 
+          <Field field='overlord' label='Overlord' /> 
           <Field field='ancestralWeapons' label='Ancestral weapons' /> 
       </ItemDetails>
     );
 
     return (
-      <RowBlock left = {itemList} right = {houseDetails} />
+      <RowBlock 
+        left = { !this.state.error ? itemList : <ErrorMessage/> } 
+        right = { !this.state.error ? houseDetails : <ErrorMessage/> }
+      />
     )
   }
 }

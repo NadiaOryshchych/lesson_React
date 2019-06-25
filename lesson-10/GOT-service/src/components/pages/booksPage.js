@@ -26,9 +26,6 @@ export default class BooksPage extends Component {
   }
 
   render() {
-    if (this.state.error) {
-      return <ErrorMessage />
-    }
 
     const itemList = (
       <ItemList 
@@ -43,13 +40,17 @@ export default class BooksPage extends Component {
         itemId={this.state.selectedBook}
         getData={this.gotService.getBook} >
           <Field field='numberOfPages' label='Number of pages' /> 
-          <Field field='publiser' label='Publiser' /> 
+          <Field field='authors' label='Authors' /> 
+          <Field field='publisher' label='Publisher' /> 
           <Field field='released' label='Released' />
       </ItemDetails>
     );
 
     return (
-      <RowBlock left = {itemList} right = {bookDetails} />
+      <RowBlock 
+        left = { !this.state.error ? itemList : <ErrorMessage/> }
+        right = { !this.state.error ? bookDetails : <ErrorMessage/> }
+      />
     )
   }
 }

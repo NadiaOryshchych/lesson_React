@@ -26,9 +26,6 @@ export default class CharacterPage extends Component {
   }
 
   render() {
-    if (this.state.error) {
-      return <ErrorMessage />
-    }
 
     const itemList = (
       <ItemList 
@@ -50,7 +47,10 @@ export default class CharacterPage extends Component {
     );
 
     return (
-      <RowBlock left = {itemList} right = {charDetails} />
+      <RowBlock 
+        left = { !this.state.error ? itemList : <ErrorMessage/> }
+        right = { !this.state.error ? charDetails : <ErrorMessage/> }
+      />
     )
   }
 }

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import Spinner from '../spinner';
-// import ErrorMessage from '../errorMessage';
+import ErrorMessage from '../errorMessage';
 
 import styled from 'styled-components';
 
@@ -13,7 +13,14 @@ const ListBlock = styled.ul `
 export default class ItemList extends Component {
   state = {
     itemList: null,
-    loading: true
+    error: false
+  }
+
+  onError = (err) => {
+    this.setState({
+      error: true,
+      loading: false
+    });
   }
 
   componentDidMount() {
@@ -25,16 +32,13 @@ export default class ItemList extends Component {
           itemList
         })
       })
-      .then(this.onListLoaded)
+      .catch(this.onError);
     ; 
   }
 
-  onListLoaded = (list) => {
-    this.setState({
-      list,
-      loading: false
-    })
-  }
+  componentDidCatch() {
+    this.setState({error: true})
+  } 
 
   renderItem(arr) {
     return arr.map((item) => {
@@ -53,21 +57,19 @@ export default class ItemList extends Component {
   }
 
   render() {
-    const {itemList, loading} = this.state;
-    console.log(itemList);
-    console.log(loading);
+
+    const {itemList, error} = this.state;
 
     if (!itemList) {
       return <Spinner/>
     }
-    const items = this.renderItem(itemList);
-    console.log(itemList);
 
-    // const spinner = (loading) ? <Spinner/> : null;
+    const errorMessage = error ? <ErrorMessage/> : null;
+    const items = this.renderItem(itemList);
 
     return (
       <ListBlock className="item-list list-group">
-        {/* {spinner} */}
+        {errorMessage}
         {items}
       </ListBlock>
     );

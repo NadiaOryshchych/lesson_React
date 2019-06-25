@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import GotService from '../../services/gotService';
-// import ItemDetails, {Field} from '../itemDetails';
 import Spinner from '../spinner';
 import ErrorMessage from '../errorMessage';
 
@@ -73,12 +72,10 @@ export default class RandomChar extends Component {
   componentDidMount() {
     this.updateChar();
     this.timerId = setInterval(this.updateChar, 1500);
-    // console.log('mounting');
   }
 
   componentWillUnmount() {
     clearInterval(this.timerId);
-    // console.log('unmounting');
   }
 
   onCharLoaded = (char) => {
@@ -101,10 +98,9 @@ export default class RandomChar extends Component {
     this.gotService.getCharacter(id)
       .then(this.onCharLoaded)
       .catch(this.onError);
-    }
+  }
 
     render() {
-      // console.log('render');
       const { char, loading, error } = this.state;
 
       const errorMessage = error ?  <ErrorMessage/> : null;

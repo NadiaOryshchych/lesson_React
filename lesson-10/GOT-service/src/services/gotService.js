@@ -28,7 +28,7 @@ export default class GotService {
   }
   getBook = async (id) => {
     const book = await this.getResource(`/books/${id}`);
-    return this._transformCharacter(book  );
+    return this._transformBooks(book);
   }
 
   getAllHouses = async () => {
@@ -37,7 +37,7 @@ export default class GotService {
   }
   getHouse = async (id) => {
     const house = await this.getResource(`/houses/${id}`);
-    return this._transformCharacter(house);
+    return this._transformHouses(house);
   }
 
   isSet(data) {
@@ -65,7 +65,8 @@ export default class GotService {
     return {
       name: book.name,
       numberOfPages: book.numberOfPages,
-      publiser: book.publiser,
+      authors: book.authors,
+      publisher: book.publisher,
       released: book.released,
       id: book.url.match(/\/([^/]*)$/)[1]
     }
@@ -77,7 +78,7 @@ export default class GotService {
       region: house.region,
       words: house.words,
       titles: house.titles,
-      overload: house.overload,
+      overlord: house.overlord,
       ancestralWeapons: house.ancestralWeapons,
       id: house.url.match(/\/([^/]*)$/)[1]
     }

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import GotService from '../../services/gotService';
 import Spinner from '../spinner';
+import ErrorMessage from '../errorMessage';
 
 import styled from 'styled-components';
 
@@ -24,12 +25,25 @@ const ErrorText = styled.span`
 `;
 
 const Field = ({item, field, label}) => {
+  let elem = item[field];
+
+  if (Array.isArray(item[field])) {
+    if (item[field][0].length == 0) {
+      elem = <ErrorText>! unknown !</ErrorText>
+    }
+    if (item[field][0].length != 0) {
+      elem = item[field][0];
+    }
+  } 
+  
+  if(!item[field]) {
+    elem = <ErrorText>! unknown !</ErrorText>
+  } 
+
   return (
     <li className="list-group-item d-flex justify-content-between">
       <TermView className="term">{label}</TermView>
-      <span>{
-        item[field] ? item[field] : <ErrorText>! unknown !</ErrorText>
-      }</span>
+      <span>{elem}</span>
     </li>
   )
 }
@@ -41,40 +55,29 @@ export default class ItemDetails extends Component {
 
   state = {
     item: {},
-    loading: true,
     error: false
   };
 
   componentDidMount() {
     this.updateItem();
-    console.log('mounting');
   }
 
   componentDidUpdate(prevProps) {
     if (this.props.itemId !== prevProps.itemId) {
       this.updateItem();
     }
-    console.log('update');
   }
 
-  // componentDidCatch() {
-  //   console.log('error');
-  //   this.setState({error: true})
-  // } 
+  componentDidCatch() {
+    this.setState({error: true})
+  } 
 
-  onItemLoaded = (item) => {
+  onError = (err) => {
     this.setState({
-      item,
+      error: true,
       loading: false
-    })
+    });
   }
-
-  // onError = (err) => {
-  //   this.setState({
-  //     error: true,
-  //     loading: false
-  //   });
-  // }
 
   updateItem() {
     const { itemId } = this.props;
@@ -89,32 +92,24 @@ export default class ItemDetails extends Component {
       .then( item => {
         this.setState({ item });
       })
-      // .then(this.onItemLoaded)
       .catch(this.onError);
-    // this.foo.bar = 0;
   }
 
   render() {
-    const { char, loading, error } = this.state;
+    const { item, error } = this.state;
 
-      // const errorMessage = error ?  <ErrorMessage/> : null;
-      // const spinner = loading ? <Spinner/> : null;
-      // const content = !(loading || error) ? <View char={char} /> : null;
-
-    if (!this.state.item) {
+    if (!item) {
       return <Spinner />;
     }
 
-    const {nameList} = this.props;
-
-    // if (this.state.char == null || this.state.char == undefined) {
-    if (this.state.error) {
-      return <div className = 'select-error' > Please select a {nameList} </div>
+    if (error) {
+      return (
+        <ItemDetailsBlock className="rounded">
+          <ErrorMessage/> 
+        </ItemDetailsBlock>
+      )
     }
-    const {item} = this.state;
     const {name, id} = item;
-    console.log(name);
-    console.log(this.props.children);
     return (
       <ItemDetailsBlock className="rounded">
         <ItemName>{name}</ItemName>
