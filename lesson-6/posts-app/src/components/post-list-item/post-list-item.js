@@ -19,16 +19,16 @@ const PostListItem = ({label, onDelete, onToggleImportant, onToggleLiked, import
       </span>
       <div className='d-flex justify-content-center align-items-center'>
         <button 
-        type='buton' 
-        className='btn-star btn-sm'
-        onClick={onToggleImportant}>
-          <i className='fa fa-star'></i>
+          type='buton' 
+          className='btn-star btn-sm'
+          onClick={onToggleImportant}>
+            <i className='fa fa-star'></i>
         </button>
         <button 
-        type='buton' 
-        className='btn-trash btn-sm'
-        onClick={onDelete}>
-          <i className='fa fa-trash-o'></i>
+          type='buton' 
+          className='btn-trash btn-sm'
+          onClick={onDelete}>
+            <i className='fa fa-trash-o'></>
         </button>
         <i className='fa fa-heart'></i>
       </div>
