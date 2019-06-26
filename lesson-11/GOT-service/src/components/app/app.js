@@ -30,7 +30,7 @@ const App = () => {
           <Route path='/' exact component={() => 
               <MainBlock>
                 <h1>Welcome to GOT DB</h1>
-                <iframe width="560" height="315" src="https://www.youtube.com/embed/XzSeCOOlGis" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/XzSeCOOlGis" frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
               </MainBlock>
             }/>
           
