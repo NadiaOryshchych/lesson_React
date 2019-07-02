@@ -59,16 +59,39 @@ const reducer = (state = initialState, action) => {
         }
       }
     case 'ITEM_REMOVE_FROM_CART':
+      // const idx = action.payload;
+      // const itemIndex = state.items.findIndex(item => item.id === idx);
+      // const delItem = state.items.find(item => item.id === idx);
+      // return {
+      //   ...state,
+      //   items: [
+      //     ...state.items.slice(0, itemIndex),
+      //     ...state.items.slice(itemIndex + 1)
+      //   ],
+      //   total: state.total - (delItem.price * delItem.counter)
+      // }
       const idx = action.payload;
       const itemIndex = state.items.findIndex(item => item.id === idx);
-      const delItem = state.items.find(item => item.id === idx);
-      return {
-        ...state,
-        items: [
-          ...state.items.slice(0, itemIndex),
-          ...state.items.slice(itemIndex + 1)
-        ],
-        total: state.total - (delItem.price * delItem.counter)
+      console.log(itemIndex);
+      const lol = state.items.find(item => item.id === idx);
+      console.log(lol);
+      console.log(lol.counter);
+      if (lol.counter !== 1) {
+        lol.counter--;
+        return {
+          ...state,
+          items: [...state.items],
+          total: state.total - lol.price
+        }
+      } else {
+        return {
+          ...state,
+          items: [
+            ...state.items.slice(0, itemIndex),
+            ...state.items.slice(itemIndex + 1)
+          ],
+          total: state.total - lol.price
+        }
       }
     default:
       return state;
