@@ -1,36 +1,101 @@
-import React from 'react';
+import React, {Component} from 'react';
+import coffeeService from '../../services/coffee-service';
+import {connect} from 'react-redux';
+import WithCoffeeService from '../hoc/';
+import {coffeeListLoaded, listRequested, listError} from '../../actions';
+import Spinner from '../spinner';
+import Error from '../error';
 
-const CoffeeListItem = () => {
+class CoffeeItem extends Component {
+  coffeeService = new coffeeService();
+
+  state = {
+    error: false
+  }
+  
+  componentDidMount() {
+    const {CoffeeService, coffeeListLoaded, listRequested, listError} = this.props;
+
+    listRequested();
+    CoffeeService.getCoffeeItems()
+        .then(res => coffeeListLoaded(res))
+        .catch(listError());
+  }
+
+  componentDidCatch() {
+    this.setState({
+      error: true
+    })
+  }
+
+  render() {
+    const {coffeeItems, loading, error, coffeeName} = this.props;
+
+    if (loading) {
+        return <Spinner/>
+    }
+    if (error) {
+        return <Error />
+    }
+    if (this.state.error) {
+      return <div className="error">Error! Something goes wrong :(</div>
+    }
+
+    const coffeeSelected = coffeeItems.find(item => item.address === coffeeName.address);
+    
+    const {name, country, url, price, description} = coffeeSelected;
+    
     return (
-        <>
-            <section class="shop">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-5 offset-1">
-                            <img class="shop__girl" src="img/coffee_item.jpg" alt="coffee_item"/>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="title">About it</div>
-                            <img class="beanslogo" src="logo/Beans_logo_dark.svg" alt="Beans logo"/>
-                            <div class="shop__point">
-                                <span>Country:</span>
-                                Brazil
-                            </div>
-                            <div class="shop__point">
-                                <span>Description:</span>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                            </div>
-                            <div class="shop__point">
-                                <span>Price:</span>
-                                <span class="shop__point-price">16.99$</span>
-                            </div>
-                        </div>
-                    </div>
+      <>
+        <div className="banner">
+          <div className="container">
+            <div className="row">
+              <h1 className="title-big">Our Coffee</h1>
+            </div>
+          </div>
+        </div>
+        <section className="shop">
+          <div className="container">
+            <div className="row">
+              <div className="col-lg-5 offset-1">
+                <div className="shop__img">
+                  <img src={url} alt="coffee_item"/>
                 </div>
-            </section>
-        </>
+              </div>
+              <div className="col-lg-4">
+                <div className="title">About "{name}"</div>
+                <img className="beanslogo" src="logo/Beans_logo_dark.svg" alt="Beans logo"/>
+                <div className="shop__point">
+                  <span>Country: </span>{country}
+                </div>
+                <div className="shop__point">
+                  <span>Description: </span>{description}
+                </div>
+                <div className="shop__point">
+                  <span>Price: </span>
+                  <span className="shop__point-price">{price}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </>
     )
+  }
 }
 
-export default CoffeeListItem;
+const mapStateToProps = (state) => {
+  return {
+    coffeeItems: state.coffeeList,
+    loading: state.loading,
+    error: state.error
+  }
+}
+
+const mapDispatchToProps = {
+  coffeeListLoaded,
+  listRequested,
+  listError
+}
+
+export default WithCoffeeService()(connect(mapStateToProps, mapDispatchToProps)(CoffeeItem));

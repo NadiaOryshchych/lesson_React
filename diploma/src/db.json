@@ -2,18 +2,21 @@
     "bestsellers": [
         {
             "name": "Solimo Coffee Beans 2 kg",
+            "address": "Solimo_Coffee_Beans_2_kg",
             "url": "https://images-na.ssl-images-amazon.com/images/I/815O9ktyfUL._SL1500_.jpg",
             "price": "10.73$",
             "id": 1
         },
         {
             "name": "Presto Coffee Beans 1 kg",
+            "address": "Presto_Coffee_Beans_1_kg",
             "url": "https://images-na.ssl-images-amazon.com/images/I/91Ryk2gKejL._SL1500_.jpg",
             "price": "15.99$",
             "id": 2
         },
         {
             "name": "AROMISTICO Coffee 1 kg",
+            "address": "AROMISTICO_Coffee_1_kg",
             "url": "https://images-na.ssl-images-amazon.com/images/I/71qBQnpQFYL._SL1500_.jpg",
             "price": "6.99$",
             "id": 3
@@ -22,6 +25,7 @@
     "coffeeList": [
         {
             "name": "Death Wish Bean",
+            "address": "Death_Wish_Bean",
             "country": "Brazil",
             "url": "https://images-na.ssl-images-amazon.com/images/I/91DlZZBjxzL._SX522_.jpg",
             "price": "12.99$",
@@ -30,6 +34,7 @@
         },
         {
             "name": "AROMISTICO Coffee 1 kg",
+            "address": "AROMISTICO_Coffee_1_kg",
             "country": "Brazil",
             "url": "https://images-na.ssl-images-amazon.com/images/I/71qBQnpQFYL._SL1500_.jpg",
             "price": "6.99$",
@@ -38,6 +43,7 @@
         },
         {
             "name": "Solimo Coffee Beans 2 kg",
+            "address": "Solimo_Coffee_Beans_2_kg",
             "country": "Kenya",
             "url": "https://images-na.ssl-images-amazon.com/images/I/815O9ktyfUL._SL1500_.jpg",
             "price": "10.73$",
@@ -46,6 +52,7 @@
         },
         {
             "name": "Black Rifle Coffee",
+            "address": "Black_Rifle_Coffee",
             "country": "Kenya",
             "url": "https://images-na.ssl-images-amazon.com/images/I/91vwF6Kh8IL._SX522_.jpg",
             "price": "19.75$",
@@ -54,6 +61,7 @@
         },
         {
             "name": "Presto Coffee Beans 1 kg",
+            "address": "Presto_Coffee_Beans_1_kg",
             "country": "Columbia",
             "url": "https://images-na.ssl-images-amazon.com/images/I/91Ryk2gKejL._SL1500_.jpg",
             "price": "15.99$",
@@ -62,6 +70,7 @@
         },
         {
             "name": "Organic Coffee One Cup",
+            "address": "Organic_Coffee_One_Cup",
             "country": "Columbia",
             "url": "https://images-na.ssl-images-amazon.com/images/I/51M2fmEXTIL.jpg",
             "price": "24.99$",

@@ -1,18 +1,35 @@
 const initialState = {
   coffeeList: [],
+  bestList: [],
+  goodList: [],
   loading: true,
   error: false
 }
 
 const reducer = (state = initialState, action) => {
-  console.log(state);
   switch (action.type) {
     case 'COFFEE_LIST_LOADED':
       return {
+        ...state,
         coffeeList: action.payload,
-        loading: false
+        loading: false,
+        error: false
       };
-    case 'COFFEE_LIST_REQUESTED':
+    case 'BEST_LIST_LOADED':
+      return {
+        ...state,
+        bestList: action.payload,
+        loading: false,
+        error: false
+      };
+    case 'GOOD_LIST_LOADED':
+      return {
+        ...state,
+        goodList: action.payload,
+        loading: false,
+        error: false
+      };
+    case 'LIST_REQUESTED':
       return {
         ...state,
         loading: true

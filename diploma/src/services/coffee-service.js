@@ -10,13 +10,13 @@ export default class CoffeeService {
     return await res.json();
   }
 
-  async getBestItems() {
-    return await this.getResource(`/bestsellers/`);
+  getBestItems() {
+    return this.getResource(`/bestsellers/`);
   }
-  async getCoffeeItems() {
-    return await this.getResource(`/coffeeList/`);
+  getCoffeeItems() {
+    return this.getResource(`/coffeeList/`);
   }
-  async getGoodsItems() {
-    return await this.getResource(`/goods/`);
+  getGoodsItems() {
+    return this.getResource(`/goods/`);
   }
 }

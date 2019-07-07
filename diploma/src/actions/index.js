@@ -5,9 +5,23 @@ const coffeeListLoaded = (newList) => {
   };
 };
 
-const coffeeListRequested = (newList) => {
+const bestListLoaded = (newList) => {
   return {
-    type: 'COFFEE_LIST_REQUESTED',
+    type: 'BEST_LIST_LOADED',
+    payload: newList
+  };
+};
+
+const goodListLoaded = (newList) => {
+  return {
+    type: 'GOOD_LIST_LOADED',
+    payload: newList
+  };
+};
+
+const listRequested = (newList) => {
+  return {
+    type: 'LIST_REQUESTED',
     payload: newList
   };
 };
@@ -20,6 +34,8 @@ const listError = () => {
 
 export {
   coffeeListLoaded, 
-  coffeeListRequested,
+  bestListLoaded,
+  goodListLoaded,
+  listRequested,
   listError
 };
