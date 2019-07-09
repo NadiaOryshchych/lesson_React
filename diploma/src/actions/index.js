@@ -19,23 +19,8 @@ const goodListLoaded = (newList) => {
   };
 };
 
-const listRequested = (newList) => {
-  return {
-    type: 'LIST_REQUESTED',
-    payload: newList
-  };
-};
-
-const listError = () => {
-  return {
-    type: 'LIST_ERROR'
-  };
-};
-
 export {
   coffeeListLoaded, 
   bestListLoaded,
-  goodListLoaded,
-  listRequested,
-  listError
+  goodListLoaded
 };

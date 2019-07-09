@@ -10,12 +10,7 @@ const App = () => {
                 <Route path='/' exact component={MainPage}/>
                 <Route path='/our-coffee' component={CoffeePage}/>
                 <Route path='/for-your-pleasure' component={PleasurePage}/>
-                <Route path='/:address' /*component={CoffeeItem}*/ render={
-                    ({match}) => {
-                        const address = match.params;
-                        return  <CoffeeItem coffeeName={address} />
-                    }
-                }/>
+                <Route path='/:address'component={CoffeeItem}/>
             </Switch>
         </div>
     )

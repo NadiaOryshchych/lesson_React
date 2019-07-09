@@ -5,7 +5,7 @@ import {Banner} from '../banners';
 import CoffeeList from '../list/coffee-list';
 import {connect} from 'react-redux';
 import WithCoffeeService from '../hoc';
-import {coffeeListLoaded, listRequested, listError} from '../../actions';
+import {coffeeListLoaded} from '../../actions';
 import Spinner from '../spinner';
 
 class CoffeePage extends Component {
@@ -23,13 +23,14 @@ class CoffeePage extends Component {
   ]
 
   componentDidMount() {
-    const {CoffeeService, coffeeListLoaded, listRequested, listError} = this.props;
+    const {CoffeeService, coffeeListLoaded} = this.props;
 
-    listRequested();
     CoffeeService.getCoffeeItems()
-      .then(res => coffeeListLoaded(res))
-      .catch(listError());
-    this.setState({loading: false})
+      .then(res => {
+        coffeeListLoaded(res);
+        this.setState({loading: false});
+      })
+      .catch(() => this.setState({error: true}));
   }
 
   searchCoffee(items, term) {
@@ -62,13 +63,12 @@ class CoffeePage extends Component {
   }
    
   render() {
-    
     const {term, filter, loading, error} = this.state;
+
+    const {coffeeItems} = this.props;
 
     if (error) { return <div className="error">Error! Coffee page not here...</div> }
     if (loading) { return <Spinner/> }
-
-    const {coffeeItems} = this.props;
 
     const visibleList = this.filterCoffee(this.searchCoffee(coffeeItems, term), filter);
 
@@ -151,16 +151,12 @@ class CoffeePage extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    coffeeItems: state.coffeeList,
-    loading: state.loading,
-    error: state.error
+    coffeeItems: state.coffeeList
   }
 }
 
 const mapDispatchToProps = {
-  coffeeListLoaded,
-  listRequested,
-  listError
+  coffeeListLoaded
 }
 
 export default WithCoffeeService()(connect(mapStateToProps, mapDispatchToProps)(CoffeePage));

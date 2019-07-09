@@ -2,9 +2,8 @@ import React, {Component} from 'react';
 import PleasureListItem from '../list-item/pleasure-list-item';
 import {connect} from 'react-redux';
 import WithCoffeeService from '../hoc';
-import {goodListLoaded, listRequested, listError} from '../../actions';
+import {goodListLoaded} from '../../actions';
 import Spinner from '../spinner';
-import Error from '../error';
 
 class GoodList extends Component {
   state = {
@@ -13,14 +12,14 @@ class GoodList extends Component {
   }
 
   componentDidMount() {
-    const {CoffeeService, goodListLoaded, listRequested, listError} = this.props;
+    const {CoffeeService, goodListLoaded} = this.props;
 
-    listRequested();
     CoffeeService.getGoodsItems()
-      .then(res => goodListLoaded(res))
-      .catch(listError());
-
-    this.setState({loading: false});
+      .then(res => {
+        goodListLoaded(res);
+        this.setState({loading: false});
+      })
+      .catch(() => this.setState({error: true}));
   }
 
   render() {
@@ -28,7 +27,7 @@ class GoodList extends Component {
     const {loading, error} = this.state;
 
     return (
-      error ? <Error/> : 
+      error ? <div className="error">Error! Our good stuff has not arrived from the server yet :(</div> : 
       loading ? <Spinner/> : 
       (coffeeItems.map(coffeeItem => {
         return <PleasureListItem key={coffeeItem.id} coffeeItem={coffeeItem} /> 
@@ -39,16 +38,12 @@ class GoodList extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    coffeeItems: state.goodList/* ,
-    loading: state.loading,
-    error: state.error */
+    coffeeItems: state.goodList
   }
 }
 
 const mapDispatchToProps = {
-  goodListLoaded,
-  listRequested,
-  listError
+  goodListLoaded
 }
 
 export default WithCoffeeService()(connect(mapStateToProps, mapDispatchToProps)(GoodList));

@@ -2,9 +2,8 @@ import React, {Component} from 'react';
 import BestListItem from '../list-item/best-list-item';
 import {connect} from 'react-redux';
 import WithCoffeeService from '../hoc';
-import {bestListLoaded, coffeeListLoaded, listRequested, listError} from '../../actions';
+import {bestListLoaded, coffeeListLoaded} from '../../actions';
 import Spinner from '../spinner';
-import Error from '../error';
 
 class CoffeeList extends Component {
   state = {
@@ -13,19 +12,21 @@ class CoffeeList extends Component {
   }
 
   componentDidMount() {
-    const {CoffeeService, bestListLoaded, coffeeListLoaded, listRequested, listError} = this.props;
+    const {CoffeeService, bestListLoaded, coffeeListLoaded} = this.props;
 
-    listRequested();
     CoffeeService.getBestItems()
-      .then(res => bestListLoaded(res))
-      .catch(listError());
+      .then(res => {
+        bestListLoaded(res);
+        this.setState({loading: false});
+      })
+      .catch(() => this.setState({error: true}));
 
-    listRequested();
     CoffeeService.getCoffeeItems()
-      .then(res => coffeeListLoaded(res))
-      .catch(listError());
-    
-    this.setState({loading: false});
+      .then(res => {
+        coffeeListLoaded(res);
+        this.setState({loading: false});
+      })
+      .catch(() => this.setState({error: true}));
   }
 
   render() {
@@ -33,7 +34,7 @@ class CoffeeList extends Component {
     const {loading, error} = this.state;
 
     return (
-      error ? <Error/> : 
+      error ? <div className="error">Error! Our coffee has not arrived from the server yet :(</div> : 
       loading ? <Spinner/> : 
       (coffeeItems.map(coffeeItem => {
         return <BestListItem key={coffeeItem.id} coffeeItem={coffeeItem} /> 
@@ -51,9 +52,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   bestListLoaded,
-  coffeeListLoaded,
-  listRequested,
-  listError
+  coffeeListLoaded
 }
 
 export default WithCoffeeService()(connect(mapStateToProps, mapDispatchToProps)(CoffeeList));

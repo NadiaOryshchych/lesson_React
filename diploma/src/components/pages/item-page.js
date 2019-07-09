@@ -1,71 +1,51 @@
 import React, {Component} from 'react';
-import coffeeService from '../../services/coffee-service';
+import AppHeader from '../app-header';
+import AppFooter from '../app-footer';
+import {Banner} from '../banners';
 import {connect} from 'react-redux';
 import WithCoffeeService from '../hoc/';
 import {withRouter} from 'react-router-dom';
-import {coffeeListLoaded, listRequested, listError} from '../../actions';
+import {coffeeListLoaded} from '../../actions';
 import Spinner from '../spinner';
-// import Error from '../error';
 
 class CoffeeItem extends Component {
-  // coffeeService = new coffeeService();
-
   state = {
     loading: true,
     error: false
   }
   
   componentDidMount() {
-    const {CoffeeService, coffeeListLoaded, listRequested, listError} = this.props;
-    // console.log(CoffeeService.getCoffeeItems());
-
-    listRequested();
+    const {CoffeeService, coffeeListLoaded} = this.props;
     CoffeeService.getCoffeeItems()
-        .then(res => {
-          console.log(res);
-          coffeeListLoaded(res)
-        })
-        .catch(listError());
-
-    this.setState({loading: false})
-  }
-
-  componentDidCatch() {
-    this.setState({error: true})
+      .then(res => {
+        coffeeListLoaded(res);
+        this.setState({loading: false})
+      })
+      .catch(() => this.setState({error: true}))
   }
 
   render() {
-    const {address} = this.props.match.params;
-    console.log(address);
-
     const {loading, error} = this.state;
+    
+    const {address} = this.props.match.params;
+
+    const {coffeeItems} = this.props;
 
     if (error) {
       return <div className="error">Error! Something goes wrong :(</div>
     }
     if (loading) {
-      console.log(loading);
       return <Spinner/>
-    }
-    
-    const {coffeeItems, coffeeName} = this.props;
-    console.log(coffeeItems);
+    }      
 
-    console.log(loading);
-    const coffeeSelected = coffeeItems.find(item => item.address === coffeeName.address);
-    console.log(coffeeSelected);
+    const coffeeSelected = coffeeItems.find(item => item.address === address);
     
     const {name, country, url, price, description} = coffeeSelected;
     
     return (
       <>
-        <div className="banner">
-          <div className="container">
-            <div className="row">
-              <h1 className="title-big">Our Coffee</h1>
-            </div>
-          </div>
-        </div>
+        <AppHeader/>
+        <Banner classStyle={'banner'} title={'Our Coffee'}/>
         <section className="shop">
           <div className="container">
             <div className="row">
@@ -91,6 +71,7 @@ class CoffeeItem extends Component {
             </div>
           </div>
         </section>
+        <AppFooter/>
       </>
     )
   }
@@ -98,16 +79,12 @@ class CoffeeItem extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    coffeeItems: state.coffeeList,
-    // loading: state.loading,
-    error: state.error
+    coffeeItems: state.coffeeList
   }
 }
 
 const mapDispatchToProps = {
-  coffeeListLoaded,
-  listRequested,
-  listError
+  coffeeListLoaded
 }
 
 export default withRouter(WithCoffeeService()(connect(mapStateToProps, mapDispatchToProps)(CoffeeItem)));
