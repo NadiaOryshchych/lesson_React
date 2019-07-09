@@ -1,16 +1,14 @@
 import React from 'react';
+import AppHeader from '../app-header';
+import AppFooter from '../app-footer';
+import {Banner} from '../banners';
 import GoodList from '../list/pleasure-list';
 
 const PleasurePage = () => {
   return (
     <>
-      <div className="banner banner-pleasure">
-        <div className="container">
-          <div className="row">
-            <h1 className="title-big">For your pleasure</h1>
-          </div>
-        </div>
-      </div>
+      <AppHeader/>
+      <Banner classStyle={'banner banner-pleasure'} title={'For your pleasure'}/>
       <section className="shop">
         <div className="container">
           <div className="row">
@@ -41,6 +39,7 @@ const PleasurePage = () => {
         </div>
         </div>
       </section>
+      <AppFooter/>
     </>
   )
 }

@@ -1,13 +1,19 @@
 import React, {Component} from 'react';
+import AppHeader from '../app-header';
+import AppFooter from '../app-footer';
+import {Banner} from '../banners';
 import CoffeeList from '../list/coffee-list';
 import {connect} from 'react-redux';
 import WithCoffeeService from '../hoc';
 import {coffeeListLoaded, listRequested, listError} from '../../actions';
+import Spinner from '../spinner';
 
 class CoffeePage extends Component {
   state = {
     term: '',
-    filter: ''
+    filter: '',
+    loading: true,
+    error: false
   }
 
   buttons = [
@@ -23,6 +29,7 @@ class CoffeePage extends Component {
     CoffeeService.getCoffeeItems()
       .then(res => coffeeListLoaded(res))
       .catch(listError());
+    this.setState({loading: false})
   }
 
   searchCoffee(items, term) {
@@ -56,7 +63,11 @@ class CoffeePage extends Component {
    
   render() {
     
-    const {term, filter} = this.state;
+    const {term, filter, loading, error} = this.state;
+
+    if (error) { return <div className="error">Error! Coffee page not here...</div> }
+    if (loading) { return <Spinner/> }
+
     const {coffeeItems} = this.props;
 
     const visibleList = this.filterCoffee(this.searchCoffee(coffeeItems, term), filter);
@@ -76,13 +87,8 @@ class CoffeePage extends Component {
 
     return (
       <>
-        <div className="banner">
-          <div className="container">
-            <div className="row">
-              <h1 className="title-big">Our Coffee</h1>
-            </div>
-          </div>
-        </div>
+        <AppHeader/>
+        <Banner classStyle={'banner'} title={'Our Coffee'}/>
         <section className="shop">
           <div className="container">
             <div className="row">
@@ -137,6 +143,7 @@ class CoffeePage extends Component {
             </div>
           </div>
         </section>
+        <AppFooter/>
       </>
     )
   }

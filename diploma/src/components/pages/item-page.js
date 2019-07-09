@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import WithCoffeeService from '../hoc/';
 import {coffeeListLoaded, listRequested, listError} from '../../actions';
 import Spinner from '../spinner';
-import Error from '../error';
+// import Error from '../error';
 
 class CoffeeItem extends Component {
   coffeeService = new coffeeService();
@@ -95,7 +95,7 @@ class CoffeeItem extends Component {
 const mapStateToProps = (state) => {
   return {
     coffeeItems: state.coffeeList,
-    loading: state.loading,
+    // loading: state.loading,
     error: state.error
   }
 }

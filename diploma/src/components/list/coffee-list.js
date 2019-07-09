@@ -19,9 +19,17 @@ class CoffeeList extends Component {
     CoffeeService.getCoffeeItems()
       .then(res => coffeeListLoaded(res))
       .catch(listError());
+      // .catch(this.onError);
     
     this.setState({loading: false});
   }
+
+  // onError = (err) => {
+  //   this.setState({
+  //     error: true,
+  //     loading: false
+  //   });
+  // }
 
   render() {
     const {coffeeList} = this.props;
