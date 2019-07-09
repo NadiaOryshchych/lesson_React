@@ -6,7 +6,12 @@ import {goodListLoaded, listRequested, listError} from '../../actions';
 import Spinner from '../spinner';
 import Error from '../error';
 
-class CoffeeList extends Component {
+class GoodList extends Component {
+  state = {
+    loading: true,
+    error: false
+  }
+
   componentDidMount() {
     const {CoffeeService, goodListLoaded, listRequested, listError} = this.props;
 
@@ -14,31 +19,29 @@ class CoffeeList extends Component {
     CoffeeService.getGoodsItems()
       .then(res => goodListLoaded(res))
       .catch(listError());
+
+    this.setState({loading: false});
   }
 
   render() {
-    const {coffeeItems, loading, error} = this.props;
-
-    if (loading) {
-      return <Spinner/>
-    }
-    if (error) {
-      return <Error />
-    }
+    const {coffeeItems} = this.props;
+    const {loading, error} = this.state;
 
     return (
-      coffeeItems.map(coffeeItem => {
-        return <PleasureListItem key={coffeeItem.id} coffeeItem={coffeeItem} />
-      })
+      error ? <Error/> : 
+      loading ? <Spinner/> : 
+      (coffeeItems.map(coffeeItem => {
+        return <PleasureListItem key={coffeeItem.id} coffeeItem={coffeeItem} /> 
+      }))
     )
   }
 };
 
 const mapStateToProps = (state) => {
   return {
-    coffeeItems: state.goodList,
+    coffeeItems: state.goodList/* ,
     loading: state.loading,
-    error: state.error
+    error: state.error */
   }
 }
 
@@ -48,4 +51,4 @@ const mapDispatchToProps = {
   listError
 }
 
-export default WithCoffeeService()(connect(mapStateToProps, mapDispatchToProps)(CoffeeList));
+export default WithCoffeeService()(connect(mapStateToProps, mapDispatchToProps)(GoodList));

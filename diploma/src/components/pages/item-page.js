@@ -10,38 +10,46 @@ class CoffeeItem extends Component {
   coffeeService = new coffeeService();
 
   state = {
+    loading: true,
     error: false
   }
   
   componentDidMount() {
     const {CoffeeService, coffeeListLoaded, listRequested, listError} = this.props;
+    // console.log(CoffeeService.getCoffeeItems());
 
     listRequested();
     CoffeeService.getCoffeeItems()
         .then(res => coffeeListLoaded(res))
         .catch(listError());
+
+    const {coffeeItems} = this.props;
+    console.log(coffeeItems);
+    this.setState({loading: false})
   }
 
   componentDidCatch() {
-    this.setState({
-      error: true
-    })
+    this.setState({error: true})
   }
 
   render() {
-    const {coffeeItems, loading, error, coffeeName} = this.props;
 
-    if (loading) {
-        return <Spinner/>
-    }
+    const {loading, error} = this.state;
+
     if (error) {
-        return <Error />
-    }
-    if (this.state.error) {
       return <div className="error">Error! Something goes wrong :(</div>
     }
+    if (loading) {
+      console.log(loading);
+      return <Spinner/>
+    }
+    
+    const {coffeeItems, coffeeName} = this.props;
+    console.log(coffeeItems);
 
+    console.log(loading);
     const coffeeSelected = coffeeItems.find(item => item.address === coffeeName.address);
+    console.log(coffeeSelected);
     
     const {name, country, url, price, description} = coffeeSelected;
     

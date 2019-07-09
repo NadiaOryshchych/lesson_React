@@ -7,6 +7,11 @@ import Spinner from '../spinner';
 import Error from '../error';
 
 class CoffeeList extends Component {
+  state = {
+    loading: true,
+    error: false
+  }
+
   componentDidMount() {
     const {CoffeeService, coffeeListLoaded, listRequested, listError} = this.props;
 
@@ -14,22 +19,20 @@ class CoffeeList extends Component {
     CoffeeService.getCoffeeItems()
       .then(res => coffeeListLoaded(res))
       .catch(listError());
+    
+    this.setState({loading: false});
   }
 
   render() {
-    const {coffeeList, loading, error} = this.props;
-
-    if (loading) {
-      return <Spinner/>
-    }
-    if (error) {
-      return <Error />
-    }
+    const {coffeeList} = this.props;
+    const {loading, error} = this.state;
 
     return (
-      coffeeList.map(coffeeItem => {
-        return <CoffeeListItem key={coffeeItem.id} coffeeItem={coffeeItem} />
-      })
+      error ? <Error/> : 
+      loading ? <Spinner/> : 
+      (coffeeList.map(coffeeItem => {
+        return <CoffeeListItem key={coffeeItem.id} coffeeItem={coffeeItem} /> 
+      }))
     )
   }
 };

@@ -1,7 +1,7 @@
 import React from 'react';
 
 const Error = () => {
-    return <div className="error">Error! Our coffee has not arrived from the server yet :(</div>
+    return <div className="error">Error! Ups.. sDKFhsjdfsdnvsdjkdf :(</div>
 }
 
 export default Error;

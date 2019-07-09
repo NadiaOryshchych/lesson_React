@@ -2,7 +2,6 @@ const initialState = {
   coffeeList: [],
   bestList: [],
   goodList: [],
-  loading: true,
   error: false
 }
 
@@ -12,32 +11,32 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         coffeeList: action.payload,
-        loading: false,
+        // loading: false,
         error: false
       };
     case 'BEST_LIST_LOADED':
       return {
         ...state,
         bestList: action.payload,
-        loading: false,
+        // loading: false,
         error: false
       };
     case 'GOOD_LIST_LOADED':
       return {
         ...state,
         goodList: action.payload,
-        loading: false,
+        // loading: false,
         error: false
       };
     case 'LIST_REQUESTED':
       return {
         ...state,
-        loading: true
+        // loading: true
       };
     case 'LIST_ERROR':
       return {
         ...state,
-        loading: false,
+        // loading: false,
         error: true
       };
     default:

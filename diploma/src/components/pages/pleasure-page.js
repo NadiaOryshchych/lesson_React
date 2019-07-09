@@ -1,5 +1,5 @@
 import React from 'react';
-import CoffeeList from '../list/pleasure-list';
+import GoodList from '../list/pleasure-list';
 
 const PleasurePage = () => {
   return (
@@ -35,7 +35,7 @@ const PleasurePage = () => {
         <div className="row">
           <div className="col-lg-10 offset-lg-1">
             <div className="shop__wrapper">
-              <CoffeeList/>
+              <GoodList/>
             </div>
           </div>
         </div>
