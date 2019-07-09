@@ -24,6 +24,36 @@ class CoffeeItem extends Component {
       .catch(() => this.setState({error: true}))
   }
 
+  renderItem = ({name, country, url, price, description}) => {
+    return (
+      <section className="shop">
+        <div className="container">
+          <div className="row">
+            <div className="col-lg-5 offset-1">
+              <div className="shop__img">
+                <img src={url} alt="coffee_item"/>
+              </div>
+            </div>
+            <div className="col-lg-4">
+              <div className="title">About "{name}"</div>
+              <img className="beanslogo" src="logo/Beans_logo_dark.svg" alt="Beans logo"/>
+              <div className="shop__point">
+                <span>Country: </span>{country}
+              </div>
+              <div className="shop__point">
+                <span>Description: </span>{description}
+              </div>
+              <div className="shop__point">
+                <span>Price: </span>
+                <span className="shop__point-price">{price}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    )
+  }
+
   render() {
     const {loading, error} = this.state;
     
@@ -31,46 +61,17 @@ class CoffeeItem extends Component {
 
     const {coffeeItems} = this.props;
 
-    if (error) {
-      return <div className="error">Error! Something goes wrong :(</div>
-    }
-    if (loading) {
-      return <Spinner/>
-    }      
-
     const coffeeSelected = coffeeItems.find(item => item.address === address);
-    
-    const {name, country, url, price, description} = coffeeSelected;
+
+    const content =  error ? <div className="error">Error! Something goes wrong :(</div> :
+      loading ? <Spinner/> :
+      this.renderItem(coffeeSelected);
     
     return (
       <>
         <AppHeader/>
         <Banner classStyle={'banner'} title={'Our Coffee'}/>
-        <section className="shop">
-          <div className="container">
-            <div className="row">
-              <div className="col-lg-5 offset-1">
-                <div className="shop__img">
-                  <img src={url} alt="coffee_item"/>
-                </div>
-              </div>
-              <div className="col-lg-4">
-                <div className="title">About "{name}"</div>
-                <img className="beanslogo" src="logo/Beans_logo_dark.svg" alt="Beans logo"/>
-                <div className="shop__point">
-                  <span>Country: </span>{country}
-                </div>
-                <div className="shop__point">
-                  <span>Description: </span>{description}
-                </div>
-                <div className="shop__point">
-                  <span>Price: </span>
-                  <span className="shop__point-price">{price}</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
+        {content}
         <AppFooter/>
       </>
     )
