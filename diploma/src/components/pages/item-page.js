@@ -2,12 +2,13 @@ import React, {Component} from 'react';
 import coffeeService from '../../services/coffee-service';
 import {connect} from 'react-redux';
 import WithCoffeeService from '../hoc/';
+import {withRouter} from 'react-router-dom';
 import {coffeeListLoaded, listRequested, listError} from '../../actions';
 import Spinner from '../spinner';
 // import Error from '../error';
 
 class CoffeeItem extends Component {
-  coffeeService = new coffeeService();
+  // coffeeService = new coffeeService();
 
   state = {
     loading: true,
@@ -20,11 +21,12 @@ class CoffeeItem extends Component {
 
     listRequested();
     CoffeeService.getCoffeeItems()
-        .then(res => coffeeListLoaded(res))
+        .then(res => {
+          console.log(res);
+          coffeeListLoaded(res)
+        })
         .catch(listError());
 
-    const {coffeeItems} = this.props;
-    console.log(coffeeItems);
     this.setState({loading: false})
   }
 
@@ -33,6 +35,8 @@ class CoffeeItem extends Component {
   }
 
   render() {
+    const {address} = this.props.match.params;
+    console.log(address);
 
     const {loading, error} = this.state;
 
@@ -106,4 +110,4 @@ const mapDispatchToProps = {
   listError
 }
 
-export default WithCoffeeService()(connect(mapStateToProps, mapDispatchToProps)(CoffeeItem));
+export default withRouter(WithCoffeeService()(connect(mapStateToProps, mapDispatchToProps)(CoffeeItem)));

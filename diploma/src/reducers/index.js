@@ -8,6 +8,7 @@ const initialState = {
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case 'COFFEE_LIST_LOADED':
+      console.log(action.payload);
       return {
         ...state,
         coffeeList: action.payload,
